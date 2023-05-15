@@ -27,14 +27,6 @@ impl IntoIterator for Formatter {
 }
 
 impl Formatter {
-    /// Rules:
-    /// "..." refers to any string (including empty string) WITHOUT a closed rounded parenthesis ")"
-    ///
-    /// 1. "%%" is treated as a literal "%"
-    /// 2. "%" followed by any character that is not "(" is invalid
-    /// 3. "%(...)" is always valid
-    /// 4. "%(...)x" where "x" is any string is valid
-    /// 5. "%(..." is invalid
     pub fn build<S>(fmts: S) -> Result<Self, TemplateError>
         where S: Into<String>
     {
