@@ -113,6 +113,26 @@ mod tests {
     }
 
     #[test]
+    fn test_valid_empty() {
+        let fmts = "";
+        let result = Formatter::build(fmts);
+        assert!(result.is_ok());
+        let formatter = result.ok().unwrap();
+        assert_eq!(formatter.elements, vec![])
+    }
+
+    #[test]
+    fn test_valid_whitespace() {
+        let fmts = "\n\t ";
+        let result = Formatter::build(fmts);
+        assert!(result.is_ok());
+        let formatter = result.ok().unwrap();
+        assert_eq!(formatter.elements, vec![
+            part("\n\t "),
+        ])
+    }
+
+    #[test]
     fn test_valid_nonalnum_in_selector() {
         let fmts = "%(a.b.c.d)%(p//  q)%((?;:'))";
         let result = Formatter::build(fmts);
