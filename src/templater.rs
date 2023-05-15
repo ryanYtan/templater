@@ -74,33 +74,6 @@ impl<T> Templater<T> {
             .reduce(|a, b| a + &b)
             .or(Some("".to_owned()))
             .unwrap())
-
-        //for element in formatter.into_iter() {
-        //    match element {
-        //        TemplateElement::Part { literal } => {
-        //            output.push_str(&literal);
-        //        },
-        //        TemplateElement::Replace { selector } => {
-        //            let accessor = self.mapping.get(&selector);
-
-        //            // the lack of an accessor associated with a particular
-        //            // selector is invalid, however the value accessed by the
-        //            // accessor might not exist, in which case the placeholder
-        //            // "NA" is used
-        //            match accessor {
-        //                Some(f) => {
-        //                    let out = f(&obj).or(Some("NA".to_owned())).unwrap();
-        //                    output.push_str(&out);
-        //                },
-        //                None => return Err(TemplateError::UnknownSelector {
-        //                    selector: selector.clone(),
-        //                    formats: "".to_owned(), //TODO
-        //                }),
-        //            }
-        //        },
-        //    }
-        //}
-        //Ok(output)
     }
 
     pub fn render<S>(&self, obj: &T, fmts: S) -> Result<String, TemplateError>
