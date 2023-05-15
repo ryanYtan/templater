@@ -78,3 +78,7 @@ In this section, `X` is any _selector_
 ## Limitations
 Currently the `Templater` object cannot be copied around due to the closure
 types. I've not found a work-around for this yet.
+
+## Motivation
+I use this library in a few personal applications of mine, and I've found it
+annoying to keep changes to the library in sync between them.

@@ -1,5 +1,5 @@
 mod common;
-use templater_rs::{builder::TemplaterBuilder, formatter::Formatter};
+use templater::{builder::TemplaterBuilder, formatter::Formatter};
 
 #[test]
 fn test_readme_example() {
