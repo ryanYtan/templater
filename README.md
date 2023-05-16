@@ -14,6 +14,11 @@ then try field _y_, otherwise return a default value or `None`".
 - A _format string_ is a string containing zero or more templates with other non-templating characters e.g. `%(id) - %(title)`
 
 ## Quick Start
+In `Cargo.toml`:
+```
+[dependencies]
+struct_string_template = "0.1.0"
+```
 Say we have a `struct` definition, and an instance of the `struct`:
 ```rust
 struct Book {
@@ -36,7 +41,7 @@ let format_string = "[%(id)] %(title) %(所有作者)";
 ```
 Build a `Templater<Book>` by doing:
 ```rust
-use string_template::TemplaterBuilder;
+use struct_string_template::TemplaterBuilder;
 
 let templater = TemplaterBuilder::<Book>::new()
     .with_selector("id", |book| Some(book.id.to_string()))
@@ -79,7 +84,7 @@ to a regex for better performance using the `Formatter` class (`render` turns
 the format string into a `Formatter` internally), then pass the `Formatter`
 variable into the `renderf` function:
 ```rust
-use string_template::Formatter;
+use struct_string_template::Formatter;
 
 let formatter = Formatter::build(format_string).ok().unwrap();
 let result = templater.renderf(&my_book, &formatter);

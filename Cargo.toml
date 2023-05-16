@@ -1,5 +1,5 @@
 [package]
-name = "string-template"
+name = "struct-string-template"
 description = "Simple string templating language on struct fields"
 version = "0.1.0"
 edition = "2021"

@@ -1,4 +1,4 @@
-use string_template::{TemplaterBuilder, Formatter};
+use struct_string_template::{TemplaterBuilder, Formatter};
 
 mod common;
 
