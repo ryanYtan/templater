@@ -12,7 +12,7 @@ impl<T> TemplaterBuilder<T> {
     pub fn with_selector<S, F>(mut self, selector: S, accessor: F) -> Self
         where
             S: Into<String>,
-            F: (Fn(&T) -> Option<String>) + 'static + Send + Sync
+            F: Fn(&T) -> Option<String> + 'static + Send + Sync
     {
         self.t.insert(selector.into(), Box::new(accessor));
         self

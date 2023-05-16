@@ -26,7 +26,7 @@ impl<T> Templater<T> {
         where
             I: IntoIterator<Item = (S, U)>,
             S: Into<String>,
-            U: (Fn(&T) -> Option<String>) + 'static + Send + Sync
+            U: Fn(&T) -> Option<String> + 'static + Send + Sync
     {
         for (selector, accessor) in selectors {
             self.insert(selector, accessor);
