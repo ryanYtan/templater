@@ -1,7 +1,10 @@
 [package]
-name = "templater"
+name = "string-template"
+description = "Simple string templating language on struct fields"
 version = "0.1.0"
 edition = "2021"
+repository = "https://github.com/ryanYtan/templater"
+readme = "README.md"
 
 [dependencies]
 thiserror = "1.0.40"
