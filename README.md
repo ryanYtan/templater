@@ -10,7 +10,8 @@ then try field _y_, otherwise return a default value or `None`".
 ## Terminology
 - A _template_ is a string `%(X)` where `X` is a _selector_
 - A _selector_ is any string (including the empty string) without a round, closing parenthesis `)`
-- A _format string_ is a string containing zero or more templates e.g. `%(id) - %(title)`
+- The closure associated with a given _selector_ is known as an _accessor_
+- A _format string_ is a string containing zero or more templates with other non-templating characters e.g. `%(id) - %(title)`
 
 ## Quick Start
 Say we have a `struct` definition, and an instance of the `struct`:
@@ -33,8 +34,10 @@ Define a format string:
 ```rust
 let format_string = "[%(id)] %(title) %(所有作者)";
 ```
-Build a `Templater<ComplexObject>` by doing:
+Build a `Templater<Book>` by doing:
 ```rust
+use string_template::TemplaterBuilder;
+
 let templater = TemplaterBuilder::<Book>::new()
     .with_selector("id", |book| Some(book.id.to_string()))
     .with_selector("title", |book| Some(book.title.clone()))
@@ -51,11 +54,33 @@ Render it using `Templater`'s `render` function
 let result = templater.render(&my_book, format_string).ok().unwrap();
 println!("{}", &result);
 ```
+
+## Advanced Use
+
+### Building `Templater` without `TemplateBuilder`
+If the `Templater` needs to be built iteratively instead of using the builder
+class, use `Templater::new()`, then add closures using the `insert` or `extend`
+methods.
+```rust
+let mut templater = Templater::<Book>::new();
+templater.insert("id", |book| Some(book.id.to_string()));
+templater.insert("title", |book| Some(book.title.clone()));
+templater.insert("所有作者", |book| {
+    Some(format!("(By: {}{})",
+        &book.author,
+        &book.contributors.clone().map(|x| format!(", {}", x)).or(Some("".to_owned())).unwrap())
+    )
+});
+```
+
+### Formatter
 If you plan to use a format string many times, you can "precompile" it similar
 to a regex for better performance using the `Formatter` class (`render` turns
 the format string into a `Formatter` internally), then pass the `Formatter`
 variable into the `renderf` function:
 ```rust
+use string_template::Formatter;
+
 let formatter = Formatter::build(format_string).ok().unwrap();
 let result = templater.renderf(&my_book, &formatter);
 println!("{}", &result);
@@ -72,7 +97,7 @@ In this section, `X` is any _selector_
 3. `%(X)` is always valid
 4. `%(X)A` where `A` is any valid string is valid
 5. `%(X` (template is not terminated) is invalid
-6. If the templater does not have `X`, then an error is thrown
+6. Having no closure associated with `X` is invalid
 7. If the return value of the closure of `X` on the structure is `None`, `NA` is printed. This is currently unconfigurable except by modifying the closure itself.
 
 ## Limitations
