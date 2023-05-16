@@ -1,5 +1,6 @@
+use string_template::{TemplaterBuilder, Formatter};
+
 mod common;
-use templater::{builder::TemplaterBuilder, formatter::Formatter};
 
 #[test]
 fn test_readme_example() {
